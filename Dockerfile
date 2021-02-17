@@ -1,6 +1,5 @@
 FROM nginx:stable-alpine as builder
 ARG CHANGE_SOURCE=false
-ARG NGINX_VER=1.18.0
 
 WORKDIR /usr/local/src
 COPY . ./ngx_waf
@@ -16,8 +15,6 @@ RUN set -xe \
     ;fi \
     && apk update \
     && apk --no-cache --virtual add uthash-dev \
-        # python \
-        # py2-pip \
         gcc \
         libc-dev \
         make \
@@ -30,13 +27,8 @@ RUN set -xe \
         libxslt-dev \
         gd-dev \
         geoip-dev
-    # && pip install lastversion \
 RUN set -xe \
-    # nginx_version="$(nginx -v 2>&1| awk -F/ '{print $2}')" \
-    # && nginx_version="$(lastversion nginx:stable)" \
-    # && nginx_dir="nginx-${nginx_version}" \
     && wget "https://nginx.org/download/nginx-${NGINX_VER}.tar.gz" -O "nginx-${NGINX_VER}.tar.gz" \
-    # && wget "$(lastversion --format source nginx:stable)" -O "${nginx_dir}.tar.gz" \
     && tar -zxf "nginx-${NGINX_VER}.tar.gz" \
     && cd "nginx-${NGINX_VER}" \
     && ./configure \
