@@ -1,5 +1,6 @@
 FROM nginx:stable-alpine as builder
 ARG CHANGE_SOURCE=false
+ARG NGINX_VER=1.18.0
 
 WORKDIR /usr/local/src
 COPY . ./ngx_waf
